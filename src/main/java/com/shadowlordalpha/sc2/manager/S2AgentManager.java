@@ -84,7 +84,7 @@ public abstract class S2AgentManager extends S2Agent {
      *
      * @param component
      */
-    public void removeManager(Component component) {
+    public void removeComponent(Component component) {
         componentLock.writeLock().lock();
         componentSet.remove(component);
         componentLock.writeLock().unlock();

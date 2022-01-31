@@ -16,15 +16,15 @@ public interface Component {
      * component it is recommended to check for it in one of the GameStart methods and not here as it could be added
      * after this component is added in which case you will end up with duplicate components.
      */
-    default void onInitialized(S2Agent agent) {
+    default void onInitialized(S2AgentManager agent) {
 
     }
 
-    default void onGameFullStart(S2Agent agent) {
+    default void onGameFullStart(S2AgentManager agent) {
 
     }
 
-    default void onGameStart(S2Agent agent) {
+    default void onGameStart(S2AgentManager agent) {
 
     }
 
