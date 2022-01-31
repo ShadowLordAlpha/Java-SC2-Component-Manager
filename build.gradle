@@ -1,9 +1,12 @@
 plugins {
-    id 'java-library'
+    id 'java'
 }
 
-group 'com.shadowcs'
+group 'com.shadowlordalpha'
 version '1.0.0'
+
+sourceCompatibility = JavaVersion.VERSION_15
+targetCompatibility = JavaVersion.VERSION_15
 
 repositories {
     mavenCentral()
