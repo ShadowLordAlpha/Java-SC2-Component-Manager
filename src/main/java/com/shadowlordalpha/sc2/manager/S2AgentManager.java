@@ -43,12 +43,12 @@ public abstract class S2AgentManager extends S2Agent {
     /**
      * We need to be able to work on the component set and we don't really want threads or other things
      */
-    private ReadWriteLock componentLock = new ReentrantReadWriteLock(true);
+    private final ReadWriteLock componentLock = new ReentrantReadWriteLock(true);
 
     /**
      *
      */
-    private ExecutorService executorService = Executors.newCachedThreadPool();
+    private final ExecutorService executorService = Executors.newCachedThreadPool();
 
     /**
      *
