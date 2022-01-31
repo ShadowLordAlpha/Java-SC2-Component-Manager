@@ -1,0 +1,39 @@
+plugins {
+    id 'java-library'
+}
+
+group 'com.shadowcs'
+version '1.0.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    /**
+     * OCraft is used to communicate with StarCraft 2, without it we would not be able to actually do anything without
+     * a screen to directly interact with which we do not use in the first place.
+     */
+    implementation 'com.github.ocraft:ocraft-s2client-bot:0.4.9'
+
+    /**
+     * SLF4J is the logging interface used in order to make logging easier for an end user as they are able to determin
+     * what logging framework they actually want to use instead of getting forced into one or several
+     */
+    implementation (group: 'org.slf4j', name: 'slf4j-api', version: '1.7.28')
+
+    /**
+     * Lombok provides annotations which allow us to get away from using any boilerplate code for getters and setters
+     * as well as a number of other objects that most people don't even bother implementing.
+     */
+    compileOnly 'org.projectlombok:lombok:1.18.22'
+    annotationProcessor 'org.projectlombok:lombok:1.18.22'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+}
+
+test {
+    useJUnitPlatform()
+}
