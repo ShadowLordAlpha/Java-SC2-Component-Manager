@@ -38,17 +38,28 @@ import java.util.function.Function;
 public abstract class S2AgentManager extends S2Agent {
 
     /**
-     * As we don't care about the order of our components we use a set to store them
+     * The Component Set is used to store a set of components that need to run with each game method. This can be
+     * controlled using the different component methods allowing dynamic adding and removal of components as well as
+     * searching though the set for specific types of components.
      */
     private final Set<Component> componentSet = new HashSet<>();
 
     /**
-     * We need to be able to work on the component set and we don't really want threads or other things
+     * The Component Set is used in a highly multithreaded style environment, due to the way it is used though this
+     * could lead to the set getting modified at times when it would cause concurrent modification exceptions. This lock
+     * is to prevent modifications when the set is in use but allow reading of the set to all happen at about the same
+     * time as it is only writes/removals that will cause this issue.
      */
     private final ReadWriteLock componentLock = new ReentrantReadWriteLock(true);
 
     /**
+     * The ExecutorService provides us the ability to run a number of components at the same time and watch the returned
+     * futures for when each one has finished. Once all are finished we are able to continue and finish the method. This
+     * allows us to run all components at the same time while still needing all components to finish before we are done
+     * with a specific step.
      *
+     * If different behavior is needed for any reason the ExecutorService may be replaced with a custom one and it will
+     * function according to that ExecutorService's rules.
      */
     @Getter @Setter private ExecutorService executorService = Executors.newCachedThreadPool();
 
@@ -65,10 +76,11 @@ public abstract class S2AgentManager extends S2Agent {
     }
 
     /**
+     * Find all Components and return a set of the Components that are an instance of the given class.
      *
-     * @param clazz
-     * @param <E>
-     * @return
+     * @param clazz The class of the Component we are looking for
+     * @param <E> The type we are looking for
+     * @return A set of components that are an instance of the given class
      */
     public <E extends Component> Set<E> findComponent(Class<E> clazz) {
 
@@ -83,8 +95,9 @@ public abstract class S2AgentManager extends S2Agent {
     }
 
     /**
+     * Remove a specific component from the component set.
      *
-     * @param component
+     * @param component The component to be removed
      */
     public void removeComponent(Component component) {
         componentLock.writeLock().lock();
@@ -93,7 +106,7 @@ public abstract class S2AgentManager extends S2Agent {
     }
 
     /**
-     *
+     * Clear the Component Set of all Components.
      */
     public void clearComponentSet() {
         componentLock.writeLock().lock();
@@ -102,8 +115,11 @@ public abstract class S2AgentManager extends S2Agent {
     }
 
     /**
+     * Allows the components to run in parallel. As the code to do this is nearly identical for all methods with just a
+     * slight change for what method is executed a method that takes in what we need to do using a Function to do so
+     * for the list of each component was determined to be the best method without duplicating code.
      *
-     * @param execute
+     * @param execute The Function that allows us to do what we need to with a component and returns the method to run
      */
     private void runComponentParallel(Function<Component, Runnable> execute) {
         try {
