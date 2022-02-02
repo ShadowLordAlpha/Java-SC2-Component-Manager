@@ -5,6 +5,8 @@ import com.github.ocraft.s2client.bot.S2Agent;
 import com.github.ocraft.s2client.bot.gateway.UnitInPool;
 import com.github.ocraft.s2client.protocol.data.Upgrade;
 import com.github.ocraft.s2client.protocol.observation.Alert;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashSet;
@@ -48,7 +50,7 @@ public abstract class S2AgentManager extends S2Agent {
     /**
      *
      */
-    private final ExecutorService executorService = Executors.newCachedThreadPool();
+    @Getter @Setter private ExecutorService executorService = Executors.newCachedThreadPool();
 
     /**
      *
