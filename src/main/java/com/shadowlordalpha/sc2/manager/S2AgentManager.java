@@ -64,8 +64,9 @@ public abstract class S2AgentManager extends S2Agent {
     @Getter @Setter private ExecutorService executorService = Executors.newCachedThreadPool();
 
     /**
+     * Add a Component to the active set of components and run the initialized method of the added Component.
      *
-     * @param component
+     * @param component The Component to be added
      */
     public void addComponent(Component component) {
         componentLock.writeLock().lock();
