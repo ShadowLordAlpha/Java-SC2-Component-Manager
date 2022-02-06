@@ -85,14 +85,12 @@ public abstract class S2AgentManager extends S2Agent {
      */
     public <E extends Component> Set<E> findComponent(Class<E> clazz) {
 
-        componentLock.writeLock().lock();
         Set<E> tempSet = new HashSet<>();
         for(Component component: componentSet) {
             if(clazz.isInstance(component)) {
                 tempSet.add((E) component);
             }
         }
-        componentLock.writeLock().unlock();
 
         return tempSet;
     }
