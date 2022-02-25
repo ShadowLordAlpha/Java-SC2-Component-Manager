@@ -134,8 +134,10 @@ public abstract class S2AgentManager extends S2Agent {
             for (Future<?> future : futureSet) {
                 try {
                     future.get();
-                } catch (ExecutionException | CancellationException e) {
-                    log.warn("Future Exception", e);
+                } catch (CancellationException e) {
+                    log.warn("Future Cancelled", e);
+                } catch (ExecutionException e) {
+                    log.warn("Future Exception Found", e.getCause());
                 }
             }
         } catch (InterruptedException e) {
