@@ -135,11 +135,13 @@ public abstract class S2AgentManager extends S2Agent {
 
             for (Future<?> future : futureSet) {
                 try {
-                    future.get();
+                    future.get(10, TimeUnit.SECONDS);
                 } catch (CancellationException e) {
                     log.warn("Future Cancelled", e);
                 } catch (ExecutionException e) {
                     log.warn("Future Exception Found", e.getCause());
+                } catch (TimeoutException e) {
+                    log.warn("Timeout Exception", e);
                 }
             }
         } catch (InterruptedException e) {
