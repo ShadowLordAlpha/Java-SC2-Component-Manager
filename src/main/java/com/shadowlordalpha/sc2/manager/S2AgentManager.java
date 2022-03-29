@@ -124,7 +124,7 @@ public abstract class S2AgentManager extends S2Agent {
      *
      * @param execute The Function that allows us to do what we need to with a component and returns the method to run
      */
-    private void runComponentParallel(Function<Component, Runnable> execute) {
+    public void runComponentParallel(Function<Component, Runnable> execute) {
         try {
             Set<Future<?>> futureSet = new HashSet<>();
             componentLock.readLock().lock();
