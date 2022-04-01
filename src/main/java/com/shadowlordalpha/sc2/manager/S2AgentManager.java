@@ -75,6 +75,13 @@ public abstract class S2AgentManager extends S2Agent {
 
         component.onInitialized(this);
 
+        // Now the new component needs to know all the currnet ones
+        componentLock.readLock().lock();
+        for(Component send: componentSet) {
+            component.onComponentAdded(this, send);
+        }
+        componentLock.readLock().unlock();
+
         // FIXME:  This needs to be run in a thread, otherwise it seems to break everything similar to our workforce
         //  manager... not actually sure why
         executorService.submit(() -> onComponentAdded(component));
@@ -123,7 +130,7 @@ public abstract class S2AgentManager extends S2Agent {
         // As tihs removes all components we don't need to update any of them, just tell them that they were removed
         componentLock.readLock().lock();
         for(Component send: componentSet) {
-            send.onComponentAdded(this, send);
+            send.onComponentRemoved(this, send);
         }
         componentLock.readLock().unlock();
 
