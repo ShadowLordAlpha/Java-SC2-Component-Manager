@@ -33,6 +33,27 @@ public interface Component {
     }
 
     /**
+     * This method is called when a new component is added to the list so that all of our other components can update
+     * themselves and are able to get info from or talk with the correct components that are added or removed.
+     *
+     * @param agent The agent that this component belongs to
+     * @param component The component that was added, this may be ourselves, ignore that one
+     */
+    default void onComponentAdded(S2AgentManager agent, Component component) {
+
+    }
+
+    /**
+     *
+     * @param agent The agent that this component belongs to
+     * @param component The component that was removed, This will trigger for ourselves but it will not trigger after
+     *                  that and the component is expected to cleanup and stop after being called with itself.
+     */
+    default void onComponentRemoved(S2AgentManager agent, Component component) {
+
+    }
+
+    /**
      * Called when a game is started after a load. Fast restarting will not call this.
      *
      * @param agent The agent that this component belongs to

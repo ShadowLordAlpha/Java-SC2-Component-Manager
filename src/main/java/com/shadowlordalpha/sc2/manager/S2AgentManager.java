@@ -74,6 +74,8 @@ public abstract class S2AgentManager extends S2Agent {
         componentLock.writeLock().unlock();
 
         component.onInitialized(this);
+
+        onComponentAdded(component);
     }
 
     /**
@@ -106,15 +108,26 @@ public abstract class S2AgentManager extends S2Agent {
         componentLock.writeLock().lock();
         componentSet.remove(component);
         componentLock.writeLock().unlock();
+
+        onComponentRemoved(component);
     }
 
     /**
      * Clear the Component Set of all Components.
      */
     public void clearComponentSet() {
+
+        // As tihs removes all components we don't need to update any of them, just tell them that they were removed
+        componentLock.readLock().lock();
+        for(Component send: componentSet) {
+            send.onComponentAdded(this, send);
+        }
+        componentLock.readLock().unlock();
+
         componentLock.writeLock().lock();
         componentSet.clear();
         componentLock.writeLock().unlock();
+
     }
 
     /**
@@ -147,6 +160,23 @@ public abstract class S2AgentManager extends S2Agent {
         } catch (InterruptedException e) {
             log.warn("Thread Interrupted", e);
         }
+    }
+
+    /**
+     * Method called when we add a component to our list so all our components can update as needed
+     *
+     * @param added
+     */
+    public void onComponentAdded(Component added) {
+        runComponentParallel((component) -> () -> component.onGameStart(this));
+    }
+
+    /**
+     * Method called when we remove a component so all our components can update as needed
+     * @param removed
+     */
+    public void onComponentRemoved(Component removed) {
+        runComponentParallel((component) -> () -> component.onGameStart(this));
     }
 
     @Override
