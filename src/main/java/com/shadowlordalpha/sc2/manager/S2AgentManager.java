@@ -171,7 +171,7 @@ public abstract class S2AgentManager extends S2Agent {
      * @param added
      */
     public void onComponentAdded(Component added) {
-        runComponentParallel((component) -> () -> component.onComponentAdded(this, component));
+        runComponentParallel((component) -> () -> component.onComponentAdded(this, added));
     }
 
     /**
@@ -179,7 +179,7 @@ public abstract class S2AgentManager extends S2Agent {
      * @param removed
      */
     public void onComponentRemoved(Component removed) {
-        runComponentParallel((component) -> () -> component.onComponentRemoved(this, component));
+        runComponentParallel((component) -> () -> component.onComponentRemoved(this, removed));
     }
 
     @Override
