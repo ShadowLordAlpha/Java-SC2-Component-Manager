@@ -75,7 +75,9 @@ public abstract class S2AgentManager extends S2Agent {
 
         component.onInitialized(this);
 
-        onComponentAdded(component);
+        // FIXME:  This needs to be run in a thread, otherwise it seems to break everything similar to our workforce
+        //  manager... not actually sure why
+        executorService.submit(() -> onComponentAdded(component));
     }
 
     /**
@@ -109,7 +111,8 @@ public abstract class S2AgentManager extends S2Agent {
         componentSet.remove(component);
         componentLock.writeLock().unlock();
 
-        onComponentRemoved(component);
+        // FIXME: See add for comment here...
+        executorService.submit(() -> onComponentRemoved(component));
     }
 
     /**
