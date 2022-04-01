@@ -78,7 +78,10 @@ public abstract class S2AgentManager extends S2Agent {
         // Now the new component needs to know all the currnet ones
         componentLock.readLock().lock();
         for(Component send: componentSet) {
-            component.onComponentAdded(this, send);
+            // so we don't double send.
+            if(send != component) {
+                component.onComponentAdded(this, send);
+            }
         }
         componentLock.readLock().unlock();
 
