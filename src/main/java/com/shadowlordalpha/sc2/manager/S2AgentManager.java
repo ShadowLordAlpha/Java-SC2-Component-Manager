@@ -181,7 +181,13 @@ public abstract class S2AgentManager extends S2Agent {
      * @param added
      */
     public void onComponentAdded(Component added) {
-        runComponentParallel((component) -> () -> component.onComponentAdded(this, added));
+        runComponentParallel((component) -> () -> {
+            try {
+                component.onComponentAdded(this, added));
+            } catch (Exception e) {
+                log.warn("Exception in onComponentAdded", e);
+            }
+        });
     }
 
     /**
@@ -189,76 +195,166 @@ public abstract class S2AgentManager extends S2Agent {
      * @param removed
      */
     public void onComponentRemoved(Component removed) {
-        runComponentParallel((component) -> () -> component.onComponentRemoved(this, removed));
+        runComponentParallel((component) -> () -> {
+            try {
+                component.onComponentRemoved(this, removed);
+            } catch (Exception e) {
+                log.warn("Exception in onComponentRemoved", e);
+            }
+        });
     }
 
     @Override
     public void onGameFullStart() {
-        runComponentParallel((component) -> () -> component.onGameFullStart(this));
+        runComponentParallel((component) -> () -> {
+            try {
+                component.onGameFullStart(this);
+            } catch (Exception e) {
+                log.warn("Exception in onGameFullStart", e);
+            }
+        });
     }
 
     @Override
     public void onGameStart() {
-        runComponentParallel((component) -> () -> component.onGameStart(this));
+        runComponentParallel((component) -> () -> {
+            try {
+                component.onGameStart(this);
+            } catch (Exception e) {
+                log.warn("Exception in onGameStart", e);
+            }
+        });
     }
 
     @Override
     public void onGameEnd() {
-        runComponentParallel((component) -> () -> component.onGameEnd(this));
+        runComponentParallel((component) -> () -> {
+            try {
+                component.onGameEnd(this);
+            } catch (Exception e) {
+                log.warn("Exception in onGameEnd", e);
+            }
+        });
     }
 
     @Override
     public void onStep() {
-        runComponentParallel((component) -> () -> component.onStep(this));
+        runComponentParallel((component) -> () -> {
+            try {
+                component.onStep(this);
+            } catch (Exception e) {
+                log.warn("Exception in onStep", e);
+            }
+        });
     }
 
     @Override
     public void onUnitDestroyed(UnitInPool unitInPool) {
-        runComponentParallel((component) -> () -> component.onUnitDestroyed(this, unitInPool));
+        runComponentParallel((component) -> () -> {
+            try {
+                component.onUnitDestroyed(this, unitInPool);
+            } catch (Exception e) {
+                log.warn("Exception in onUnitDestroyed", e);
+            }
+        });
     }
 
     @Override
     public void onUnitCreated(UnitInPool unitInPool) {
-        runComponentParallel((component) -> () -> component.onUnitCreated(this, unitInPool));
+        runComponentParallel((component) -> () -> {
+            try {
+                component.onUnitCreated(this, unitInPool);
+            } catch (Exception e) {
+                log.warn("Exception in onUnitCreated", e);
+            }
+        });
     }
 
     @Override
     public void onUnitIdle(UnitInPool unitInPool) {
-        runComponentParallel((component) -> () -> component.onUnitIdle(this, unitInPool));
+        runComponentParallel((component) -> () -> {
+            try {
+                component.onUnitIdle(this, unitInPool);
+            } catch (Exception e) {
+                log.warn("Exception in onUnitIdle", e);
+            }
+        });
     }
 
     @Override
     public void onUpgradeCompleted(Upgrade upgrade) {
-        runComponentParallel((component) -> () -> component.onUpgradeCompleted(this, upgrade));
+        runComponentParallel((component) -> () -> {
+            try {
+                component.onUpgradeCompleted(this, upgrade);
+            } catch (Exception e) {
+                log.warn("Exception in onUpgradeCompleted", e);
+            }
+        });
     }
 
     @Override
     public void onBuildingConstructionComplete(UnitInPool unitInPool) {
-        runComponentParallel((component) -> () -> component.onBuildingConstructionComplete(this, unitInPool));
+        runComponentParallel((component) -> () -> {
+            try {
+                component.onBuildingConstructionComplete(this, unitInPool);
+            } catch (Exception e) {
+                log.warn("Exception in onBuildingConstructionComplete", e);
+            }
+        });
     }
 
     @Override
     public void onNydusDetected() {
-        runComponentParallel((component) -> () -> component.onNydusDetected(this));
+        runComponentParallel((component) -> () -> {
+            try {
+                component.onNydusDetected(this);
+            } catch (Exception e) {
+                log.warn("Exception in onNydusDetected", e);
+            }
+        });
     }
 
     @Override
     public void onNuclearLaunchDetected() {
-        runComponentParallel((component) -> () -> component.onNuclearLaunchDetected(this));
+        runComponentParallel((component) -> () -> {
+            try {
+                component.onNuclearLaunchDetected(this);
+            } catch (Exception e) {
+                log.warn("Exception in onNuclearLaunchDetected", e);
+            }
+        });
     }
 
     @Override
     public void onUnitEnterVision(UnitInPool unitInPool) {
-        runComponentParallel((component) -> () -> component.onUnitEnterVision(this, unitInPool));
+        runComponentParallel((component) -> () -> {
+            try {
+                component.onUnitEnterVision(this, unitInPool);
+            } catch (Exception e) {
+                log.warn("Exception in onUnitEnterVision", e);
+            }
+        });
     }
 
     @Override
     public void onError(List<ClientError> clientErrors, List<String> protocolErrors) {
-        runComponentParallel((component) -> () -> component.onError(this, clientErrors, protocolErrors));
+        runComponentParallel((component) -> () -> {
+            try {
+                component.onError(this, clientErrors, protocolErrors);
+            } catch (Exception e) {
+                log.warn("Exception in onError", e);
+            }
+        });
     }
 
     @Override
     public void onAlert(Alert alert) {
-        runComponentParallel((component) -> () -> component.onAlert(this, alert));
+        runComponentParallel((component) -> () -> {
+            try {
+                component.onAlert(this, alert);
+            } catch (Exception e) {
+                log.warn("Exception in onAlert", e);
+            }
+        });
     }
 }
