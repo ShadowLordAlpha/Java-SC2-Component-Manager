@@ -10,6 +10,6 @@
         <module name="Java-SC2-Component-Manager.main" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="15" />
+    <bytecodeTargetLevel target="17" />
   </component>
 </project>

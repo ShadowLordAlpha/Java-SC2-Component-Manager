@@ -183,7 +183,7 @@ public abstract class S2AgentManager extends S2Agent {
     public void onComponentAdded(Component added) {
         runComponentParallel((component) -> () -> {
             try {
-                component.onComponentAdded(this, added));
+                component.onComponentAdded(this, added);
             } catch (Exception e) {
                 log.warn("Exception in onComponentAdded", e);
             }
